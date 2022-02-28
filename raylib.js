@@ -9,10 +9,10 @@ const StructType = sdi(ref)
 // BEGIN BINDINGS
 
 export const Color = StructType({
-  r: ref.types.uint8,
-  g: ref.types.uint8,
-  b: ref.types.uint8,
-  a: ref.types.uint8
+  r: ref.types.uchar,
+  g: ref.types.uchar,
+  b: ref.types.uchar,
+  a: ref.types.uchar
 })
 
 export const Vector2 = StructType({
@@ -55,19 +55,8 @@ export const BLANK = new Color({ r: 0, g: 0, b: 0, a: 0 }) // Blank (Transparent
 export const MAGENTA = new Color({ r: 255, g: 0, b: 255, a: 255 }) // Magenta
 export const RAYWHITE = new Color({ r: 245, g: 245, b: 245, a: 255 }) // My own White (raylib logo)
 
-var r = ffi.Library('libraylib', {
-  'GetRandomValue': [ 'int', ['int', 'int'] ],
-  'InitWindow': ['void', ['int', 'int', 'string']],
-  'WindowShouldClose': ['bool', []],
-  'BeginDrawing': ['void', []],
-  'EndDrawing': ['void', []],
-  'ClearBackground': ['void', ['uint8']],
-  'DrawFPS': ['void', ['int', 'int']],
-  'CloseWindow': ['void', []],
-  'GetFPS': ['int', []]
-})
 
-// thses could be further wrapped, if needed
+// these could be further wrapped, if needed, but right now I am just exposing them directly
 export const {
   GetRandomValue,
   InitWindow,
@@ -78,16 +67,24 @@ export const {
   DrawFPS,
   CloseWindow,
   GetFPS
-} = r
+} = ffi.Library('libraylib', {
+  'GetRandomValue': [ 'int', ['int', 'int'] ],
+  'InitWindow': ['void', ['int', 'int', 'string']],
+  'WindowShouldClose': ['bool', []],
+  'BeginDrawing': ['void', []],
+  'EndDrawing': ['void', []],
+  'ClearBackground': ['void', [ref.refType(Color)] ],
+  'DrawFPS': ['void', ['int', 'int']],
+  'CloseWindow': ['void', []],
+  'GetFPS': ['int', []]
+})
 
 // END BINDINGS
-
-console.log('RAYWHITE'. RAYWHITE)
 
 InitWindow(800, 450, 'raylib [textures] example - bunnymark')
 while(!WindowShouldClose()) {
   BeginDrawing()
-  ClearBackground(RAYWHITE)
+  ClearBackground(RAYWHITE.ref())
   DrawFPS(10, 10)
   EndDrawing()
 }
