@@ -15,36 +15,10 @@ export const Color = StructType({
   a: ref.types.uint8
 })
 
-export const Vector2Real = StructType({
+export const Vector2 = StructType({
   x: ref.types.float,
   y: ref.types.float
 })
-
-export class Vector2 {
-  #real
-  constructor(x =0, y =0) {
-    this.#real = new Vector2Real({ x, y})
-  }
-
-  get x () {
-    return this.#real.x
-  }
-
-  get y () {
-    return this.#real.y
-  }
-
-  set x (v) {
-    this.#real.x = v
-  }
-
-  set y (v) {
-    this.#real.y = v
-  }
-
-  // more stuff here....
-}
-
 
 export const Texture = StructType({
   id: ref.types.uint8,
@@ -87,7 +61,7 @@ var r = ffi.Library('libraylib', {
   'WindowShouldClose': ['bool', []],
   'BeginDrawing': ['void', []],
   'EndDrawing': ['void', []],
-  'ClearBackground': ['void', ['int']],
+  'ClearBackground': ['void', ['uint8']],
   'DrawFPS': ['void', ['int', 'int']],
   'CloseWindow': ['void', []],
   'GetFPS': ['int', []]
@@ -108,12 +82,12 @@ export const {
 
 // END BINDINGS
 
-console.log('RAYWHITE', RAYWHITE)
+console.log('RAYWHITE'. RAYWHITE)
 
 InitWindow(800, 450, 'raylib [textures] example - bunnymark')
 while(!WindowShouldClose()) {
   BeginDrawing()
-  ClearBackground(RAYWHITE.ref())
+  ClearBackground(RAYWHITE)
   DrawFPS(10, 10)
   EndDrawing()
 }
