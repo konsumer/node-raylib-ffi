@@ -21,7 +21,7 @@ export const Vector2 = StructType({
 })
 
 export const Texture = StructType({
-  id: ref.types.uint,
+  id: ref.types.uchar,
   width: ref.types.int,
   height: ref.types.int,
   mipmaps: ref.types.int,
@@ -65,11 +65,11 @@ const r = ffi.Library('libraylib', {
   'WindowShouldClose': ['bool', []],
   'BeginDrawing': ['void', []],
   'EndDrawing': ['void', []],
-  'ClearBackground': ['void', [ref.refType(Color)] ],
+  'ClearBackground': ['void', [Color] ],
   'DrawFPS': ['void', ['int', 'int']],
   'CloseWindow': ['void', []],
   'GetFPS': ['int', []],
-  'LoadTexture': [ref.refType(Texture2D), ['string']]
+  'LoadTexture': [Texture2D, ['string']]
 })
 
 export const {
@@ -93,7 +93,7 @@ export const {
 InitWindow(800, 450, 'raylib [textures] example - bunnymark')
 while(!WindowShouldClose()) {
   BeginDrawing()
-  ClearBackground(RAYWHITE.ref())
+  ClearBackground(RAYWHITE)
   DrawFPS(10, 10)
   EndDrawing()
 }
