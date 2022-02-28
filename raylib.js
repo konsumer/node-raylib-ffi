@@ -21,12 +21,14 @@ export const Vector2 = StructType({
 })
 
 export const Texture = StructType({
-  id: ref.types.uint8,
+  id: ref.types.uint,
   width: ref.types.int,
   height: ref.types.int,
   mipmaps: ref.types.int,
   format: ref.types.int
 })
+
+export const Texture2D = Texture
 
 export const LIGHTGRAY = new Color({ r: 200, g: 200, b: 200, a: 255 }) // Light Gray
 export const GRAY = new Color({ r: 130, g: 130, b: 130, a: 255 }) // Gray
@@ -53,10 +55,23 @@ export const WHITE = new Color({ r: 255, g: 255, b: 255, a: 255 }) // White
 export const BLACK = new Color({ r: 0, g: 0, b: 0, a: 255 }) // Black
 export const BLANK = new Color({ r: 0, g: 0, b: 0, a: 0 }) // Blank (Transparent)
 export const MAGENTA = new Color({ r: 255, g: 0, b: 255, a: 255 }) // Magenta
-export const RAYWHITE = new Color({ r: 245, g: 245, b: 245, a: 255 }) // My own White (raylib logo)
+export const RAYWHITE = (new Color({ r: 245, g: 245, b: 245, a: 255 })) // My own White (raylib logo)
 
 
 // these could be further wrapped, if needed, but right now I am just exposing them directly
+const r = ffi.Library('libraylib', {
+  'GetRandomValue': [ 'int', ['int', 'int'] ],
+  'InitWindow': ['void', ['int', 'int', 'string']],
+  'WindowShouldClose': ['bool', []],
+  'BeginDrawing': ['void', []],
+  'EndDrawing': ['void', []],
+  'ClearBackground': ['void', [ref.refType(Color)] ],
+  'DrawFPS': ['void', ['int', 'int']],
+  'CloseWindow': ['void', []],
+  'GetFPS': ['int', []],
+  'LoadTexture': [ref.refType(Texture2D), ['string']]
+})
+
 export const {
   GetRandomValue,
   InitWindow,
@@ -68,22 +83,12 @@ export const {
   CloseWindow,
   GetFPS,
   LoadTexture
-} = ffi.Library('libraylib', {
-  'GetRandomValue': [ 'int', ['int', 'int'] ],
-  'InitWindow': ['void', ['int', 'int', 'string']],
-  'WindowShouldClose': ['bool', []],
-  'BeginDrawing': ['void', []],
-  'EndDrawing': ['void', []],
-  'ClearBackground': ['void', [ref.refType(Color)] ],
-  'DrawFPS': ['void', ['int', 'int']],
-  'CloseWindow': ['void', []],
-  'GetFPS': ['int', []],
-  'LoadTexture': [ref.refType(Texture), ['string']]
-})
+} = r
 
 // END BINDINGS
 
-const texBunny = LoadTexture('resources/wabbit_alpha.png')
+// this runs, and outputs correct name on C-side, but segfaults
+// const texBunny = LoadTexture('resources/wabbit_alpha.png')
 
 InitWindow(800, 450, 'raylib [textures] example - bunnymark')
 while(!WindowShouldClose()) {
