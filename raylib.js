@@ -66,7 +66,8 @@ export const {
   ClearBackground,
   DrawFPS,
   CloseWindow,
-  GetFPS
+  GetFPS,
+  LoadTexture
 } = ffi.Library('libraylib', {
   'GetRandomValue': [ 'int', ['int', 'int'] ],
   'InitWindow': ['void', ['int', 'int', 'string']],
@@ -76,10 +77,13 @@ export const {
   'ClearBackground': ['void', [ref.refType(Color)] ],
   'DrawFPS': ['void', ['int', 'int']],
   'CloseWindow': ['void', []],
-  'GetFPS': ['int', []]
+  'GetFPS': ['int', []],
+  'LoadTexture': [ref.refType(Texture), ['string']]
 })
 
 // END BINDINGS
+
+const texBunny = LoadTexture('resources/wabbit_alpha.png')
 
 InitWindow(800, 450, 'raylib [textures] example - bunnymark')
 while(!WindowShouldClose()) {
