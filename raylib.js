@@ -69,7 +69,7 @@ const r = ffi.Library('libraylib', {
   'DrawFPS': ['void', ['int', 'int']],
   'CloseWindow': ['void', []],
   'GetFPS': ['int', []],
-  'LoadTexture': [Texture2D, ['string']]
+  'LoadTexture': [ref.refType(Texture2D), ['string']]
 })
 
 export const {
@@ -88,7 +88,7 @@ export const {
 // END BINDINGS
 
 // this runs, and outputs correct name on C-side, but segfaults
-// const texBunny = LoadTexture('resources/wabbit_alpha.png')
+const texBunny = LoadTexture('resources/wabbit_alpha.png')
 
 InitWindow(800, 450, 'raylib [textures] example - bunnymark')
 while(!WindowShouldClose()) {

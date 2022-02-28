@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "node textures_bunnymrk.js"
+    "start": "node raylib.js"
   },
   "dependencies": {
     "ffi-napi": "^4.0.3",
