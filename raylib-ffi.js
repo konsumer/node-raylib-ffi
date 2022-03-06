@@ -4,7 +4,6 @@
 import ref from 'ref-napi'
 import sdi from 'ref-struct-di'
 import ffi from 'ffi-napi'
-import { RAYWHITE, Color } from './colors.js'
 
 const StructType = sdi(ref)
 
@@ -24,7 +23,7 @@ export const Texture = StructType({
 })
 
 // these could be further wrapped, if needed, but right now I am just exposing them directly
-const {
+export const {
   GetRandomValue,
   InitWindow,
   WindowShouldClose,
@@ -50,30 +49,3 @@ const {
   'DrawTexture': ['void', [Texture, 'int', 'int', 'uint']]
 })
 
-// END BINDINGS
-
-InitWindow(800, 450, 'raylib [textures] example - bunnymark')
-
-const texBunny = LoadTexture('resources/wabbit_alpha.png')
-
-const bunnies = []
-
-while(!WindowShouldClose()) {
-  if (GetFPS() > 60) {
-    for (let i = 0; i < 10; i++) {
-      bunnies.push([GetRandomValue(0, 800), GetRandomValue(0, 450), Color(GetRandomValue(50, 240), GetRandomValue(80, 240), GetRandomValue(100, 240))])
-    }
-  }
-  
-  BeginDrawing()
-  ClearBackground(RAYWHITE)
-  bunnies.forEach(([x, y, tint]) => {
-    DrawTexture(texBunny, x, y, tint)
-  })
-  DrawFPS(10, 10)
-  EndDrawing()
-}
-
-console.log(bunnies.length, 'bunnies')
-
-CloseWindow()
