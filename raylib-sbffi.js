@@ -1,11 +1,8 @@
 import { getNativeFunction, getBufferPointer } from 'sbffi'
+import { RAYWHITE, Color } from './colors.js'
 
 // make a buffer & pointer from string
 const str = value => getBufferPointer(Buffer.from(value))
-
-// these are RGBA hex numbers
-const WHITE = 0xffffffff
-const RAYWHITE = 0xf5f5f5ff
 
 const libPath = 'libraylib.dylib' 
 export const GetRandomValue = getNativeFunction(libPath, 'GetRandomValue', 'int', ['int', 'int'])
@@ -30,14 +27,14 @@ const bunnies = []
 while(!WindowShouldClose()) {
   if (GetFPS() > 60) {
     for (let i = 0; i < 10; i++) {
-      bunnies.push([GetRandomValue(0, 800), GetRandomValue(0, 450)])
+      bunnies.push([GetRandomValue(0, 800), GetRandomValue(0, 450), Color(GetRandomValue(50, 240), GetRandomValue(80, 240), GetRandomValue(100, 240))])
     }
   }
 
   BeginDrawing()
   ClearBackground(RAYWHITE)
-  bunnies.forEach(([x, y]) => {
-    DrawTexture(texBunny, x, y, WHITE)
+  bunnies.forEach(([x, y, tint]) => {
+    DrawTexture(texBunny, x, y, tint)
   })
   DrawFPS(10, 10)
   EndDrawing()

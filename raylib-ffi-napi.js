@@ -4,6 +4,7 @@
 import ref from 'ref-napi'
 import sdi from 'ref-struct-di'
 import ffi from 'ffi-napi'
+import { RAYWHITE, Color } from './colors.js'
 
 const StructType = sdi(ref)
 
@@ -21,10 +22,6 @@ export const Texture = StructType({
   mipmaps: ref.types.int,
   format: ref.types.int
 })
-
-// these are RGBA hex numbers
-const WHITE = 0xffffffff
-const RAYWHITE = 0xf5f5f5ff
 
 // these could be further wrapped, if needed, but right now I am just exposing them directly
 const {
@@ -64,14 +61,14 @@ const bunnies = []
 while(!WindowShouldClose()) {
   if (GetFPS() > 60) {
     for (let i = 0; i < 10; i++) {
-      bunnies.push([GetRandomValue(0, 800), GetRandomValue(0, 450)])
+      bunnies.push([GetRandomValue(0, 800), GetRandomValue(0, 450), Color(GetRandomValue(50, 240), GetRandomValue(80, 240), GetRandomValue(100, 240))])
     }
   }
   
   BeginDrawing()
   ClearBackground(RAYWHITE)
-  bunnies.forEach(([x, y]) => {
-    DrawTexture(texBunny, x, y, WHITE)
+  bunnies.forEach(([x, y, tint]) => {
+    DrawTexture(texBunny, x, y, tint)
   })
   DrawFPS(10, 10)
   EndDrawing()
