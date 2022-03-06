@@ -43,9 +43,11 @@ export const CloseWindow = getNativeFunction(libPath, 'CloseWindow', 'void', [])
 export const GetFPS = getNativeFunction(libPath, 'GetFPS', 'int', [])
 export const LoadTexture = getNativeFunction(libPath, 'LoadTexture', 'pointer', ['pointer'])
 
-// const texBunny = LoadTexture(str('resources/wabbit_alpha.png'))
-
 InitWindow(800, 450, str('raylib [textures] example - bunnymark'))
+
+// not sure why this crashes
+const texBunny = LoadTexture(str('resources/wabbit_alpha.png'))
+
 while(!WindowShouldClose()) {
   BeginDrawing()
   ClearBackground(RAYWHITE)
