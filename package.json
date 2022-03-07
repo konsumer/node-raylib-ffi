@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "ffi-napi": "^4.0.3",
+    "raylib": "github:RobLoach/node-raylib#b875971d095e803f131b242b3228356e1f2113fb",
     "ref-array-di": "^1.2.2",
     "ref-napi": "^3.0.3",
     "ref-struct-di": "^1.1.1",

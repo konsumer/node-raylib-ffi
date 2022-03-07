@@ -1,5 +1,7 @@
 import { getNativeFunction, getBufferPointer } from 'sbffi'
 
+export * from './colors.js'
+
 // make a buffer & pointer from string
 const str = value => getBufferPointer(Buffer.from(value))
 

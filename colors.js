@@ -1,3 +1,6 @@
+// this is a uint-based color system for FFI or others
+// you can also use RGBA hex: 0xFFFFFFFF
+
 export const Color = (r=0, g=0, b=0, a=0xFF) => ((r << 24) >>> 0 | g << 16 | b << 8 | a) >>> 0
 
 export const LIGHTGRAY = Color(200, 200, 200, 255) // Light Gray

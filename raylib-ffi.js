@@ -5,6 +5,8 @@ import ref from 'ref-napi'
 import sdi from 'ref-struct-di'
 import ffi from 'ffi-napi'
 
+export * from './colors.js'
+
 const StructType = sdi(ref)
 
 // BEGIN BINDINGS

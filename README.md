@@ -19,4 +19,7 @@ node bunnymark.js ffi
 
 # test with sbffi
 node bunnymark.js sbffi
+
+# test with regular node-raylib
+node bunnymark.js napi
 ```

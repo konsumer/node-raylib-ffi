@@ -1,11 +1,18 @@
-import { RAYWHITE, Color } from './colors.js'
-
 // pick the right lib, based on arg1 == sbffi
 import * as f from './raylib-ffi.js'
 import * as s from './raylib-sbffi.js'
+import raylib from 'raylib'
 
 const [,,type ] = process.argv
-const r = type === 'sbffi' ? s : f
+let r = f
+if (type === 'sbffi') {
+  r = s
+}
+if (type === 'napi') {
+  r = raylib
+}
+
+
 const {
   InitWindow,
   LoadTexture,
@@ -17,7 +24,9 @@ const {
   DrawTexture,
   DrawFPS,
   EndDrawing,
-  CloseWindow
+  CloseWindow,
+  Color,
+  RAYWHITE
 } = r
 
 
